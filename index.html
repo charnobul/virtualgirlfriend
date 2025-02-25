@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чат-бот</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
+        .chat-container { width: 300px; margin: 50px auto; border: 1px solid #ccc; border-radius: 5px; background: white; padding: 10px; }
+        .messages { height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 5px; }
+        .message { margin: 10px 0; }
+        .user { text-align: right; color: blue; }
+        .bot { text-align: left; color: green; }
+        input[type="text"] { width: 80%; }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <div class="messages" id="messages"></div>
+    <input type="text" id="userInput" placeholder="Введите сообщение..." />
+    <button onclick="sendMessage()">Отправить</button>
+</div>
+
+<script>
+    function sendMessage() {
+        const userInput = document.getElementById("userInput");
+        const message = userInput.value;
+        
+        if (message.trim() === "") return;
+
+        appendMessage(message, "user");
+        userInput.value = "";
+
+        // Простой ответ от бота
+        const botResponse = getBotResponse(message);
+        appendMessage(botResponse, "bot");
+    }
+
+    function appendMessage(message, sender) {
+        const messagesDiv = document.getElementById("messages");
+        const messageDiv = document.createElement("div");
+        messageDiv.className = "message " + sender;
+        messageDiv.innerText = message;
+        messagesDiv.appendChild(messageDiv);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight; // Прокрутка вниз
+    }
+
+    function getBotResponse(message) {
+        // Простейшие ответы бота
+        const responses = {
+            "привет": "Привет! Как дела?",
+            "как дела?": "У меня всё хорошо, а у тебя?",
+            "что ты любишь?": "Я люблю общаться с тобой!",
+            "пока": "До свидания! Напиши, когда захочешь пообщаться."
+        };
+        return responses[message.toLowerCase()] || "Извини, я не понимаю.";
+    }
+</script>
+
+</body>
+</html>
